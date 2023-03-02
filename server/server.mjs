@@ -4,7 +4,6 @@ dotenv.config()
 
 import express from 'express'
 import cors from 'cors'
-const PORT = 4000;
 
 const server = express();
 server.use(express.json()); 
@@ -32,13 +31,13 @@ const pool = mariadb.createPool({
 //     }
 // })()
 // the wrapper around the connection & try-catch-finally is just nameless arrow function to create an asynchronous environment.
-
+//read
 server.get("/show-all", async (req, res) => {
     // database connection
     // execute query
     try{
         const data = await showAllIdeas()
-        res.json(data)
+        res.json({data : data})
         console.log(data)
         // res.send("OK")
     }catch(err){
@@ -47,8 +46,22 @@ server.get("/show-all", async (req, res) => {
 
 })
 
-server.listen(PORT, () => {
-    console.log(`Server started on http://127.0.0.1:${PORT}`); //Use backticks using template literal
+//create
+server.post('/create', async (req, res) => {
+    let title = req.body;
+    let descript = req.body;
+    try{
+        const data = await createIdeas(title,descript)
+        res.json(data)
+        // console.log(data)
+        // res.send("OK")
+    }catch(err){
+        console.log(err)
+    }
+})
+
+server.listen(process.env.PORT, () => {
+    console.log('Server is running'); //process.env to access the env file
 })
 
   //functions to use
@@ -59,7 +72,21 @@ async function showAllIdeas(){
         const data = await connection.query(`SELECT * FROM ideas`);
         console.log(data)
         return data
-
+    } catch(err) {
+        throw err;
+    } finally {
+        if (connection) connection.end();
+    }
+}
+async function createIdeas( title, description){
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        const query = `INSERT INTO Ideas (Title, Description, Created_at) VALUES (?, ?, NOW())`; 
+        const dataIdeas = [title, description]; 
+        const result = await connection.query(query, dataIdeas); 
+        console.log(result)
+        return result; 
     } catch(err) {
         throw err;
     } finally {
