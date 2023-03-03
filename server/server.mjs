@@ -48,8 +48,9 @@ server.get("/show-all", async (req, res) => {
 
 //create
 server.post('/create', async (req, res) => {
-    let title = req.body;
-    let descript = req.body;
+    let title = req.body.title;
+    let descript = req.body.description;
+    console.log(title,descript)
     try{
         const data = await createIdeas(title,descript)
         res.json(data)
@@ -82,7 +83,7 @@ async function createIdeas( title, description){
     let connection;
     try {
         connection = await pool.getConnection();
-        const query = `INSERT INTO Ideas (Title, Description, Created_at) VALUES (?, ?, NOW())`; 
+        const query = `INSERT INTO ideas (title, description, created_at) VALUES (?, ?, NOW())`; 
         const dataIdeas = [title, description]; 
         const result = await connection.query(query, dataIdeas); 
         console.log(result)
