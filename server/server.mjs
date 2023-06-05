@@ -17,20 +17,7 @@ const pool = mariadb.createPool({
     database: process.env.DB_NAME,
     connectionLimit: 5
 });
-//execution
-// (async () => {
-//     let connection;
-//     try {
-//         connection = await pool.getConnection();
-//         const data = await connection.query(`SELECT * FROM brilliant_minds.ideas`);
-//         console.log(data)
-//     } catch(err) {
-//         throw err;
-//     } finally {
-//         if (connection) connection.end();
-//     }
-// })()
-// the wrapper around the connection & try-catch-finally is just nameless arrow function to create an asynchronous environment.
+
 //read
 server.get("/show-all", async (req, res) => {
     // database connection
@@ -45,25 +32,44 @@ server.get("/show-all", async (req, res) => {
     }
 
 })
-
 //create
 server.post('/create', async (req, res) => {
-    let title = req.body.title;
-    let descript = req.body.description;
-    console.log(title,descript)
-    try{
-        const data = await createIdeas(title,descript)
-        res.json(data)
-        // console.log(data)
-        // res.send("OK")
-    }catch(err){
-        console.log(err)
+    const { title, description } = req.body;
+    try {
+      await createIdeas(title, description);
+      res.json({ success: true });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'An error occurred' });
     }
-})
+  });
+//edit
+server.get('/edit/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const idea = await getIdeaById(id);
+        res.json(idea);
+    } catch (err) {
+        console.log(err);
+    }
+});
+//delete
+server.delete('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+    const result = await deleteIdea(id);
+    res.json(result);
+} catch (err) {
+    console.log(err);
+    res.status(500).json({ error: 'Unable to delete the idea.' });
+}
+});
+
 
 server.listen(process.env.PORT, () => {
     console.log('Server is running'); //process.env to access the env file
 })
+
 
   //functions to use
 async function showAllIdeas(){
@@ -79,16 +85,41 @@ async function showAllIdeas(){
         if (connection) connection.end();
     }
 }
-async function createIdeas( title, description){
+async function createIdeas(title, description, created_at) {
     let connection;
     try {
         connection = await pool.getConnection();
-        const query = `INSERT INTO ideas (title, description, created_at) VALUES (?, ?, NOW())`; 
-        const dataIdeas = [title, description]; 
-        const result = await connection.query(query, dataIdeas); 
-        console.log(result)
-        return result; 
-    } catch(err) {
+        const query = `INSERT INTO ideas (title, description, created_at) VALUES (?, ?, NOW())`;
+        const dataIdeas = [title, description];
+        const result = await connection.query(query, dataIdeas);
+        return { success: true };
+    } catch (err) {
+        throw err;
+    } finally {
+        if (connection) connection.end();
+    }
+}
+async function getIdeaById(id) {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        const query = `SELECT * FROM ideas WHERE id = ?`;
+        const result = await connection.query(query, [id]);
+        return result[0];
+    } catch (err) {
+        throw err;
+    } finally {
+        if (connection) connection.end();
+    }
+}
+async function deleteIdea(id) {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        const query = `DELETE FROM ideas WHERE id = ?`;
+        const result = await connection.query(query, [id]);
+        return result;
+    } catch (err) {
         throw err;
     } finally {
         if (connection) connection.end();

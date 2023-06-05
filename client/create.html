@@ -5,17 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="./create.js"></script>
+    <link rel="stylesheet" href="./style.css">
     <title>Create_page</title>
 </head>
 <body>
-<div class="container">
-<form class="ideasForm">
-    <label for="title">Title:</label>
-    <input type="text" id="title">
-    <label for="description">Description:</label>
-    <textarea placeholder="Enter Details..." value="text" id="description"></textarea>
-    <input type="submit" class="submit" value="Submit">
-</form>
-</div>
+    <div class="header">
+        <a href="./index.html">Home</a>
+    </div>
+    <div id="popup" class="popup">
+        <p>Idea created successfully.</p>
+    </div>
+    <div class="container">
+        <div class="quote">
+            'The big secret in life is that there is no big secret. Whatever your goal, you can get there if you're willing to work.'
+        </div>
+        <div class="form-container">
+            <form class="ideasForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title">
+                <label for="description">Description:</label>
+                <textarea placeholder="Enter Details..." id="description" name="description"></textarea>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+    
 </body>
 </html>
+
+
+
+
+
+
+

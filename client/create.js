@@ -1,27 +1,42 @@
-document.querySelector('.ideasForm');
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded event fired');
+  const form = document.querySelector('.ideasForm');
+  const popup = document.querySelector('#popup'); // Get the pop-up element
 
-const submitBtn = document.querySelector('.submit');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const title = document.querySelector('#title').value;
+    const description = document.querySelector('#description').value;
+    const created_at = new Date().toISOString(); // Generate the created_at value
+    const data = { title, description, created_at };
 
-submitBtn.addEventListener('click', function(){
-    const titleBox = document.querySelector('#title');
-    const title = titleBox.value;
-    titleBox.value = "";
+    console.log('Title:', title);
+    console.log('Description:', description);
 
     const options = {
-        method:'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            title:  // variable with the value you want to send
-        })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     };
-    
-    (async () => {
-        const response = await fetch('http://localhost:4000/create', options);
-        const data = await response.json()
-        console.log(data)
-    })()
-})
 
+    fetch('http://localhost:4000/create', options)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        document.querySelector('#title').value = '';
+        document.querySelector('#description').value = '';
 
+        // Show the pop-up after successfully creating an idea
+        popup.style.display = 'block';
+        setTimeout(() => {
+          // Hide the pop-up after 3 seconds
+          popup.style.display = 'none';
+        }, 3000);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+});

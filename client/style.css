@@ -1,0 +1,165 @@
+
+/* Index.html  */
+body {
+
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('./image/background02.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.homecontainer {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #ddd;
+}
+
+.homecontainer a {
+    color: #333;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    background-color: #ff8a65;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+}
+
+.quote {
+    text-align: center;
+    margin: 2rem 0;
+    color: #1d1414;
+    height: 50px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.43);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.2px);
+    -webkit-backdrop-filter: blur(7.2px);
+    border: 1px solid rgba(255, 255, 255, 0.44);
+}
+h1{
+    text-align: center;
+    margin: 2rem 0;
+    color: #1d1414;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.5); /* Add transparency to create a glass effect */
+    border-radius: 5px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px); /* Apply a blur effect to the background */
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.card p {
+    margin-bottom: 0;
+    color: #777;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+
+/* Create.html */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.header {
+    background-color: #ddd;
+    padding: 1rem;
+}
+
+.header a {
+    color: #333;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.quote {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-style: italic;
+    color: #555;
+    background: rgba(255, 255, 255, 0.43);
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-container input[type="text"],
+.form-container textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.form-container input[type="submit"] {
+    padding: 0.5rem 1rem;
+    background-color: #ff8a65;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container input[type="submit"]:hover {
+    background-color: #ff7043;
+}
+#popup {
+    display: none; /* Hide the pop-up by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    background-color: pink;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  #popup p {
+    margin: 0;
+  }
+  
